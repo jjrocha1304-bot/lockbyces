@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #222222;
+    border-right: 1px solid #333333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo-section h2 {
+    color: #ffb703;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    margin-bottom: 15px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background-color: #333333;
+    color: #ffb703;
+}
+
+.btn-logout {
+    background-color: #e53e3e;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #c53030;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    background-color: #121212;
+    overflow-y: auto; /* Habilita el scroll vertical cuando las tarjetas sobrepasen la altura */
+}
+
+.header {
+    border-bottom: 1px solid #333333;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.header span {
+    color: #ffb703;
+}
+
+/* Estilo base para tarjetas estándar */
+.card {
+    background-color: #222222;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #333333;
+    max-width: 500px;
+}
+
+/* --- SECCIÓN DE OBJETIVOS EN FILAS Y COLUMNAS --- */
+
+/* Contenedor principal que genera la cuadrícula */
+.contenedor-objetivos {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    gap: 20px !important;
+    width: 100% !important;
+}
+
+/* Regla especial que rompe la restricción de 500px solo para los objetivos */
+.contenedor-objetivos .card {
+    max-width: 100% !important; 
+    width: 100% !important;
+    margin: 0 !important;
+    padding-top: 35px;
+    position: relative;
+    border-left: 4px solid #f9b816;
+    background-color: #222222;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contenedor-objetivos .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Etiqueta del número de objetivo (01, 02, etc.) */
+.numero-objetivo {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-weight: 800;
+    font-size: 13px;
+    color: #f9b816;
+    background-color: rgba(249, 184, 22, 0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.contenedor-objetivos .card p {
+    color: #dddddd;
+    line-height: 1.6;
+    font-size: 14px;
+    margin: 0;
+}

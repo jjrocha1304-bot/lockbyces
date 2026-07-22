@@ -1,0 +1,9 @@
+paleta de colores logo:
+#f9b816
+#2b2b2b
+#0e0e0c
+
+hover:
+.tarjeta:hover{
+    transform:translateY(-10px);
+}

@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300..900;1,300..900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Mulish", sans-serif;
+    background-color: #ffffff;    
+    color: #1b1b1a;
+    line-height: 1.6;
+}
+
+/* 2. HEADER Y MENÚ */
+header {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h2 {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.menu {
+    background-color: rgb(27, 27, 26);
+    padding: 15px;
+    text-align: center;    
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav a {
+    color: aliceblue;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color:#f9b816;
+}
+
+main {    
+    display: flex;
+    background-color: #0e0e0c;
+    height: auto !important; 
+    min-height: unset !important;
+    gap: 20px;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+.tarjeta{
+    background:#2b2b2b;
+    width:320px;
+    padding:35px 25px;
+    transition:.4s;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.icono{
+    font-size:45px;
+    color:#f9b816;
+    margin-bottom:20px;
+}
+
+.tarjeta h3{
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:15px;
+    color: #f9b816;
+}
+
+.contenedor{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    gap:30px;
+}
+
+.quienes-somos{
+    background: #1e1e1e;
+    padding: 50px;
+    border-radius: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    font-size: 18px;
+}
+
+.integrantes{
+    flex: 1.3;   
+    background: #1e1e1e;
+    padding: 50px;
+    border-radius: 10px;    
+    height: fit-content;
+    width: 30%;
+    font-size: 18px;
+}
+
+section {
+    background-color: #1b1b1a;    
+    color: #f9b816; 
+    border-radius: 12px;
+}
+
+section h2, section p {
+    padding-bottom: 16px;
+}
+
+section h2 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+aside {   
+    background-color: #1b1b1a;
+    /*padding: 40px 30px;*/
+    color: #f9b816;
+    border-radius: 12px;
+}
+
+aside h2, aside p {
+    padding-bottom: 16px;
+}
+
+.tabla-integrantes {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 500px;
+    background-color: #0e0e0c;
+    color: #f9b816;
+    margin-top: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.tabla-integrantes th,
+.tabla-integrantes td {
+    border: 1px solid #1b1b1a;
+    padding: 12px 16px;
+    text-align: center;
+}
+
+.tabla-integrantes th {
+    background-color: #1b1b1a;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+footer {
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;
+    text-align: center;
+    padding: 25px;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+}
+
+/*SOBRE NOSOTROS*/
+
+.abajo{
+    background-color: #f9b816;
+    display: flex;
+    padding: 25px;    
+    color: #0e0e0c;
+    font-weight: 500;
+    gap: 30px;
+}
+
+
+.sobre-nosotros{
+    padding: 30px;
+    width: 50%;
+}
+
+.sobre-nosotros > h2{
+    margin-bottom: 20px;
+    text-align:left;
+}
+
+.sobre-nosotros > p{
+    text-align:justify;
+    font-size: 18px;
+}
+
+.imagen-sobre-nosotros{
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.imagen-sobre-nosotros > img{
+    border-radius: 5px;
+    width: 606px;
+    height: 400px;
+    margin-left: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
+
+/*METAS*/
+.metas{
+    background-color: #0e0e0c;
+    padding: 50px;    
+    color: #f9b816;
+    font-weight: 500;  
+    font-size: 18px;
+}
+
+.metas > h2{
+    margin-bottom: 20px;
+    text-align:left;
+}
+
+.nuestras-metas{
+    background-color: #0e0e0c;
+    display: flex;
+    padding: 25px;    
+    color: #0e0e0c;
+    font-weight: 500;
+    gap: 30px;
+}
+
+.imagen-metas > img{
+    border-radius: 5px;
+    width: 606px;
+    height: 400px;
+    margin-left: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
+
+.imagen-metas{
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.metas > p{
+    text-align:justify;
+    font-size: 18px;
+}
+
+/*NUMERO DE REGISTROS*/
+
+.registros {
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 0%;
+    background-color: #2b2b2b;
+}
+
+#valor-contador{
+    font-size: 25px;
+}
+
+/*POR QUE ELEGIR A LOCKBYCES*/
+
+.porque-lockbyces{
+    background-color: #f9b816;
+    display:block;
+    padding: 20px;
+    color: #0e0e0c;
+    font-weight: 500;
+    gap: 30px;
+    font-size: 18px;
+}
+
+.texto-porque-lockbyces{
+    padding: 40px 80px 40px 80px;
+    text-align: justify; 
+}
+
+.texto-porque-lockbyces > h2{
+    margin-bottom: 20px;
+    text-align:left;
+}
+
+.tarjetas-porque-lockbyces{
+    width:100%;
+    display:flex;
+    justify-content:space-evenly;
+    gap:15px;
+    padding:35px 25px 50px 25px;
+}
+
+.tarjeta-porque{
+    background:#cecece;
+    width:320px;
+    padding:35px 25px 35px 25px;
+    color: #2b2b2b;
+    transition:.4s;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.tarjeta-porque > h3{
+    padding: 15px;
+}
+
+.tarjeta-porque > p{
+    padding: 20px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.icono-porque{
+    font-size:45px;
+    color:#2b2b2b;
+    margin-bottom:20px;
+}
