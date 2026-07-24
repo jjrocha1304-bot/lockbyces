@@ -81,6 +81,17 @@ main {
     color: #f9b816;
 }
 
+/*SLOGAN*/
+.slogan{
+    padding: 80px 50px 80px 50px;
+    place-items: center;
+    font-family: "Playpen Sans Deva", sans-serif;
+    font-optical-sizing:auto;
+    font-style: normal;
+    font-size: 80px;
+}
+
+
 .contenedor{
     width:100%;
     display:flex;
@@ -260,14 +271,16 @@ footer {
 /*NUMERO DE REGISTROS*/
 
 .registros {
-    padding: 20px 0;
+    /*padding: 20px 0;*/
     text-align: center;
     border-radius: 0%;
     background-color: #2b2b2b;
+    padding: 100px; 
 }
 
 #valor-contador{
-    font-size: 25px;
+    font-size: 50px;
+    font-weight: 700;
 }
 
 /*POR QUE ELEGIR A LOCKBYCES*/

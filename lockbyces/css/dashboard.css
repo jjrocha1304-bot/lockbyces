@@ -1,37 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300..900;1,300..900&display=swap');
-
+/* RESET & FUENTES */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    font-family: 'Mulish', sans-serif;
 }
 
 body {
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: #121212;
+    color: #e0e0e0;
     display: flex;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
+/* SIDEBAR LAYOUT */
 .sidebar {
     width: 260px;
-    background-color: #222222;
-    border-right: 1px solid #333333;
+    background-color: #1e1e1e;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border-right: 1px solid #2a2a2a;
 }
 
 .logo-section h2 {
-    color: #ffb703;
-    font-size: 20px;
-    text-transform: uppercase;
+    color: #f9b816;
+    margin-bottom: 5px;
     letter-spacing: 1px;
-    margin-bottom: 30px;
-    text-align: center;
+}
+
+.carrusel-texto {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 25px;
+    min-height: 30px;
 }
 
 .nav-links {
@@ -39,113 +42,227 @@ body {
 }
 
 .nav-links li {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
-.nav-links a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 16px;
+.nav-btn {
     display: block;
-    padding: 10px;
-    border-radius: 5px;
+    color: #ccc;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
     transition: background 0.3s;
 }
 
-.nav-links a:hover,
-.nav-links a.active {
-    background-color: #333333;
-    color: #ffb703;
+.nav-btn:hover, .nav-btn.active {
+    background-color: #f9b816;
+    color: #121212;
+    font-weight: bold;
 }
 
 .btn-logout {
-    background-color: #e53e3e;
+    display: block;
+    background-color: #e74c3c;
     color: white;
-    text-decoration: none;
-    padding: 12px;
     text-align: center;
+    padding: 10px;
     border-radius: 6px;
+    text-decoration: none;
     font-weight: bold;
-    transition: background 0.3s;
 }
 
-.btn-logout:hover {
-    background-color: #c53030;
-}
-
+/* MAIN CONTENT LAYOUT */
 .main-content {
     flex: 1;
-    padding: 40px;
-    background-color: #121212;
-    overflow-y: auto; /* Habilita el scroll vertical cuando las tarjetas sobrepasen la altura */
-}
-
-.header {
-    border-bottom: 1px solid #333333;
-    padding-bottom: 20px;
-    margin-bottom: 30px;
+    padding: 30px;
+    overflow-y: auto;
 }
 
 .header h1 {
-    font-size: 28px;
+    font-size: 24px;
+    margin-bottom: 25px;
 }
 
 .header span {
-    color: #ffb703;
+    color: #f9b816;
 }
 
-/* Estilo base para tarjetas estándar */
+/* TARJETAS & CONTENEDORES */
 .card {
-    background-color: #222222;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #2a2a2a;
+}
+
+.contenedor-objetivos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.numero-objetivo {
+    display: inline-block;
+    color: #f9b816;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* TABLAS RESPONSIVAS */
+.tabla-lockbyces {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-lockbyces th, .tabla-lockbyces td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.tabla-lockbyces th {
+    background-color: #252525;
+    color: #f9b816;
+}
+
+.crud-badge-rol {
+    background-color: #f9b816;
+    color: #000;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* BOTONES CRUD */
+.btn-crear {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-accion {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-editar { background-color: #f39c12; color: white; }
+.btn-eliminar { background-color: #c0392b; color: white; }
+.btn-cancelar { background-color: #7f8c8d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+.btn-guardar { background-color: #2980b9; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+
+/* MODALES FLOANTES (POP-UPS) */
+.crud-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.crud-modal-box {
+    background-color: #1e1e1e;
     padding: 25px;
     border-radius: 8px;
-    border: 1px solid #333333;
-    max-width: 500px;
+    width: 100%;
+    max-width: 450px;
+    border: 1px solid #333;
 }
 
-/* --- SECCIÓN DE OBJETIVOS EN FILAS Y COLUMNAS --- */
-
-/* Contenedor principal que genera la cuadrícula */
-.contenedor-objetivos {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-    gap: 20px !important;
-    width: 100% !important;
-}
-
-/* Regla especial que rompe la restricción de 500px solo para los objetivos */
-.contenedor-objetivos .card {
-    max-width: 100% !important; 
-    width: 100% !important;
-    margin: 0 !important;
-    padding-top: 35px;
-    position: relative;
-    border-left: 4px solid #f9b816;
-    background-color: #222222;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.contenedor-objetivos .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-/* Etiqueta del número de objetivo (01, 02, etc.) */
-.numero-objetivo {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    font-weight: 800;
-    font-size: 13px;
+.crud-modal-title {
     color: #f9b816;
-    background-color: rgba(249, 184, 22, 0.15);
-    padding: 2px 8px;
+    margin-bottom: 15px;
+}
+
+.crud-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.crud-input, .crud-select {
+    width: 100%;
+    padding: 10px;
+    background: #2b2b2b;
+    border: 1px solid #444;
+    color: #fff;
     border-radius: 4px;
 }
 
-.contenedor-objetivos .card p {
-    color: #dddddd;
-    line-height: 1.6;
-    font-size: 14px;
-    margin: 0;
+.crud-form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.crud-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* COMPONENTES SIMULADOR IOT & GPS */
+.log-lista {
+    list-style: none;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #aaa;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.mapa-simulado {
+    width: 100%;
+    height: 320px;
+    background-color: #111;
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 1px solid #333;
+    z-index: 1;
+}
+
+/* MARCADOR PUNTO AMARILLO INTERACTIVO SOBRE MAPA DE CALI */
+.marcador-gps-leaflet {
+    width: 18px !important;
+    height: 18px !important;
+    background-color: #f9b816;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px #f9b816, 0 0 20px #f9b816;
+    animation: pulse-glow 2s infinite;
+}
+
+/* Animación de pulso radar */
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(249, 184, 22, 0.8);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(249, 184, 22, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(249, 184, 22, 0);
+    }
+}
+
+/* Ajustes de estilo para el Popup de Leaflet en modo oscuro */
+.leaflet-popup-content-wrapper {
+    background: #1e1e1e !important;
+    color: #ffffff !important;
+    border: 1px solid #f9b816;
+    border-radius: 6px;
+}
+
+.leaflet-popup-tip {
+    background: #1e1e1e !important;
 }

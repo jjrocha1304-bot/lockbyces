@@ -34,6 +34,12 @@ $conexion->close();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+    <!-- Fuentes google fonts slogan-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Playpen+Sans+Deva:wght@100..800&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -73,7 +79,11 @@ $conexion->close();
                     <h3>Satisfacción</h3>
                     <i class="fa-solid fa-handshake icono"></i>                    
                 </div>
-            </div>             
+            </div>
+            
+            <div class="slogan">
+                <h2>"Seguridad inteligente, para tu tranquilidad"</h2>
+            </div>
         </section>  
 
         <aside class="integrantes">
