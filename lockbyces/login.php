@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Iniciar Sesión - LOCKBYCES</title>
     
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/propiedades_personalizadas.css">
     <link rel="icon" type="image/png" href="img/favicon.jpeg" />
 
     <!-- Fuentes Google Fonts -->

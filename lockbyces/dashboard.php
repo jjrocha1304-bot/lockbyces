@@ -6,8 +6,11 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-// Obtenemos el rol guardado en la sesión
-$rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
+// Obtenemos el rol y datos del usuario desde la sesión
+$rolUsuario      = $_SESSION['usuario_rol']      ?? '';
+$nombreUsuario   = $_SESSION['usuario_nombre']   ?? '';
+$telefonoUsuario = $_SESSION['usuario_telefono'] ?? 'Sin teléfono registrado';
+$correoUsuario   = $_SESSION['usuario_correo']   ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,7 +20,8 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
     <title>Dashboard - LOCKBYCES</title>
     
     <!-- Estilos CSS -->
-    <link rel="stylesheet" href="css/dashboard.css?v=2.2">
+    <link rel="stylesheet" href="css/dashboard.css?v=4.0">
+    <link rel="stylesheet" href="css/propiedades_personalizadas.css">
     <link rel="icon" type="image/png" href="img/favicon.jpeg" />
 
     <!-- Fuentes Google Fonts -->
@@ -33,28 +37,37 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Script principal -->
-    <script src="js/script.js?v=2.2" defer></script>
+    <script src="js/script.js?v=4.0" defer></script>
 </head>
 <body>
 
-    <div class="sidebar">
+    <!-- BARRA SUPERIOR PARA MÓVILES -->
+    <div class="mobile-header">
+        <div class="mobile-logo">LOCKBYCES</div>
+        <button class="btn-menu-mobile" id="btn-menu-toggle" aria-label="Abrir Menú">☰</button>
+    </div>
+
+    <!-- OVERLAY OSCURO PARA CERRAR EL MENÚ MÓVIL AL HACER CLIC FUERA -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <div class="sidebar" id="sidebar">
         <div class="logo-section">
             <h2>LOCKBYCES</h2>
             <p id="mensaje-infinito" class="carrusel-texto"></p>
             <ul class="nav-links">                
-                <li><a href="#" class="nav-btn active" onclick="mostrarSeccion('inicio', this)">Inicio</a></li>
+                <li><a href="#" class="nav-btn active" onclick="seleccionarNavegacion('inicio', this)">Inicio</a></li>
                 
                 <!-- SECCIONES VISIBLES SOLO PARA CLIENTES / NO ADMIN -->
                 <?php if ($rolUsuario !== 'admin'): ?>
-                    <li><a href="#" class="nav-btn" onclick="mostrarSeccion('objetivos', this)">Objetivos</a></li>
-                    <li><a href="#" class="nav-btn" onclick="mostrarSeccion('catalogo', this)">Comprar / Servicios</a></li>
-                    <li><a href="#" class="nav-btn" onclick="mostrarSeccion('monitoreo', this)">Rastreo & IoT</a></li>
-                    <li><a href="#" class="nav-btn" onclick="mostrarSeccion('estadisticas', this)">Estadísticas</a></li>
+                    <li><a href="#" class="nav-btn" onclick="seleccionarNavegacion('objetivos', this)">Objetivos</a></li>
+                    <li><a href="#" class="nav-btn" onclick="seleccionarNavegacion('monitoreo', this)">Rastreo & IoT</a></li>
+                    <li><a href="#" class="nav-btn" onclick="seleccionarNavegacion('estadisticas', this)">Estadísticas</a></li>
+                    <li><a href="#" class="nav-btn" onclick="seleccionarNavegacion('contactar', this)">Soporte</a></li>
                 <?php endif; ?>
 
                 <!-- SECCIÓN VISIBLE SOLO PARA ADMINISTRADORES -->
                 <?php if ($rolUsuario === 'admin'): ?>
-                    <li><a href="#" class="nav-btn" onclick="mostrarSeccion('admin-usuarios', this)">Administrar Usuarios</a></li>
+                    <li><a href="#" class="nav-btn" onclick="seleccionarNavegacion('admin-usuarios', this)">Administrar Usuarios</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -65,30 +78,32 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
     <!-- Contenido Principal -->
     <div class="main-content">
         <div class="header">
-            <h1>Bienvenido a la dashboard de Lockbyces, <span><?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></span></h1>
+            <h1>Bienvenido a la dashboard de Lockbyces, <span><?php echo htmlspecialchars($nombreUsuario); ?></span></h1>
         </div>
 
         <!-- SECCIÓN 1: INICIO (Todos) -->
         <div id="seccion-inicio" class="seccion-contenido">
             <div class="card">
                 <h3>Estado del Sistema</h3>
-                <p style="margin-top: 10px; color: #aaa;">Tu inicio de sesión se ha procesado de manera correcta y segura mediante la conexión de LOCKBYCES.</p>
+                <p class="texto-secundario mt-10">Tu inicio de sesión se ha procesado de manera correcta y segura mediante la conexión de LOCKBYCES.</p>
             </div>
 
             <!-- Tabla de Integrantes del Equipo -->
-            <div class="card" style="margin-top: 20px;">
+            <div class="card mt-20">
                 <h3>Equipo de Desarrollo LockByces</h3>
-                <table class="tabla-lockbyces" style="margin-top: 15px;">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre Integrante</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cuerpo-tabla">
-                        <!-- Cargado dinámicamente desde script.js -->
-                    </tbody>
-                </table>
+                <div class="tabla-contenedor-scroll">
+                    <table class="tabla-lockbyces mt-15">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre Integrante</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpo-tabla">
+                            <!-- Cargado dinámicamente desde script.js -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -96,8 +111,8 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
         <?php if ($rolUsuario !== 'admin'): ?>
             
             <!-- SECCIÓN: OBJETIVOS -->
-            <div id="seccion-objetivos" class="seccion-contenido" style="display: none;">
-                <h2 style="margin-bottom: 20px; color: #f9b816;">Objetivos del Proyecto</h2>
+            <div id="seccion-objetivos" class="seccion-contenido seccion-oculta">
+                <h2 class="titulo-seccion mb-20">Objetivos del Proyecto</h2>
                 
                 <div class="contenedor-objetivos">
                     <div class="card">
@@ -132,51 +147,22 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
                 </div>
             </div>
 
-            <!-- SECCIÓN: CATÁLOGO Y PROCESO DE COMPRA -->
-            <div id="seccion-catalogo" class="seccion-contenido" style="display: none; width: 100%;">
-                <h2 style="margin-bottom: 10px; color: #f9b816;">Información de Compra & Servicios LockByces</h2>
-                <p style="color: #ccc; margin-bottom: 30px; line-height: 1.6;">
-                    Conoce las especificaciones de nuestro dispositivo antirrobo, los métodos de adquisición y las garantías que ofrecemos para proteger tu vehículo.
-                </p>
-
-                <div style="display: flex; flex-direction: column; gap: 25px; border-left: 2px solid #f9b816; padding-left: 20px;">
-                    <div>
-                        <h3 style="color: #f9b816; margin-bottom: 5px;">01. Dispositivo Inteligente LockByces</h3>
-                        <p style="color: #aaa; margin: 0; line-height: 1.5;">Protege tu bicicleta con nuestro módulo antirrobo con sensor de sonido/vibración y GPS activo.</p>
-                    </div>
-
-                    <div>
-                        <h3 style="color: #f9b816; margin-bottom: 5px;">02. Alertas Inmediatas</h3>
-                        <p style="color: #aaa; margin: 0; line-height: 1.5;">Notificaciones instantáneas en tu móvil ante cualquier movimiento no autorizado.</p>
-                    </div>
-
-                    <div>
-                        <h3 style="color: #f9b816; margin-bottom: 5px;">03. Pasos para Adquirirlo</h3>
-                        <p style="color: #aaa; margin: 0; line-height: 1.5;">
-                            1. Selecciona tu plan.<br>
-                            2. Coordina el punto de entrega.<br>
-                            3. Vincula el dispositivo en esta plataforma.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
             <!-- SECCIÓN: RASTREO Y MONITOREO IOT -->
-            <div id="seccion-monitoreo" class="seccion-contenido" style="display: none;">
-                <h2 style="margin-bottom: 20px; color: #f9b816;">Centro de Monitoreo & Rastreo IoT</h2>
+            <div id="seccion-monitoreo" class="seccion-contenido seccion-oculta">
+                <h2 class="titulo-seccion mb-20">Centro de Monitoreo & Rastreo IoT</h2>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="grid-layout">
                     <!-- Simulador de Sensor de Alarma -->
                     <div class="card">
                         <h3>Simulador de Sensor de Sonido / Alarma</h3>
-                        <p style="color: #aaa; font-size: 14px; margin-top: 5px;">Alertas activadas: <b id="alarm-count" style="color:#f9b816;">0</b></p>
+                        <p class="texto-secundario texto-sm mt-5">Alertas activadas: <b id="alarm-count" class="texto-resaltado">0</b></p>
                         
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <div class="grupo-botones mt-15">
                             <button class="btn-crear" onclick="simulateSoundTrigger()">Probar Alarma</button>
                             <button class="btn-cancelar" onclick="resetAlarmCount()">Reiniciar</button>
                         </div>
 
-                        <h4 style="margin-top: 20px; color: #fff;">Historial de Eventos:</h4>
+                        <h4 class="subtitulo-blanco mt-20">Historial de Eventos:</h4>
                         <ul id="alarm-log" class="log-lista">
                             <li class="empty-log">Sin registros de activación.</li>
                         </ul>
@@ -185,12 +171,12 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
                     <!-- Ficha Técnica de la Bicicleta -->
                     <div class="card">
                         <h3>Ficha Técnica del Vehículo</h3>
-                        <form onsubmit="saveBikeInfo(event)" style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        <form onsubmit="saveBikeInfo(event)" class="form-ficha-tecnica mt-15">
                             <input type="text" id="bike-brand" class="crud-input" placeholder="Marca (Ej: Gw, Specialized)" value="GW">
                             <input type="text" id="bike-model" class="crud-input" placeholder="Modelo / Año" value="Scorpion 2024">
                             <input type="text" id="bike-serial" class="crud-input" placeholder="Número de Serie del Marco" value="GW9920182X">
                             
-                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <div class="grupo-botones mt-10">
                                 <button type="submit" class="btn-guardar">Guardar Ficha</button>
                                 <button type="button" class="btn-eliminar" onclick="reportStolen()">🚨 Reportar Robo</button>
                             </div>
@@ -198,53 +184,82 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
                     </div>
 
                     <!-- MAPA INTERACTIVO REAL DE CALI, COLOMBIA -->
-                    <div class="card" style="grid-column: 1 / -1;">
+                    <div class="card grid-ancho-total">
                         <h3>Geolocalización GPS Activa (Cali, Colombia)</h3>
-                        <p style="color: #aaa; font-size: 14px;">Coordenadas actualizadas: <span id="coords-display" style="color:#f9b816;">03.4516° N, -76.5320° W</span> | Última señal: <span id="time-display" style="color:#fff;">Justo ahora</span></p>
+                        <p class="texto-secundario texto-sm">Coordenadas actualizadas: <span id="coords-display" class="texto-resaltado">03.4516° N, -76.5320° W</span> | Última señal: <span id="time-display" class="texto-blanco">Justo ahora</span></p>
                         
                         <!-- Contenedor del Mapa Leaflet -->
                         <div id="mapa-cali" class="mapa-simulado"></div>
 
-                        <button class="btn-crear" onclick="updateLocation()" style="margin-top: 15px;">Simular Movimiento GPS en Cali</button>
+                        <button class="btn-crear mt-15 btn-full-mobile" onclick="updateLocation()">Simular Movimiento GPS en Cali</button>
                     </div>
                 </div>
             </div>
 
             <!-- SECCIÓN: ESTADÍSTICAS DEL HURTO -->
-            <div id="seccion-estadisticas" class="seccion-contenido" style="display: none; width: 100%;">
-                <h2 style="margin-bottom: 10px; color: #f9b816;">Estadísticas de Hurto de Bicicletas</h2>
-                <p style="color: #ccc; margin-bottom: 25px; line-height: 1.6;">Análisis consolidado basado en reportes de seguridad ciudadana.</p>
+            <div id="seccion-estadisticas" class="seccion-contenido seccion-oculta ancho-completo">
+                <h2 class="titulo-seccion mb-10">Estadísticas de Hurto de Bicicletas</h2>
+                <p class="descripcion-seccion mb-25">Análisis consolidado basado en reportes de seguridad ciudadana.</p>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: center;">
-                    <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 8px;">
-                        <h4 style="color: #f9b816; text-align: center; margin-bottom: 15px;">Modalidades de Hurto</h4>
-                        <div style="position: relative; height: 260px;">
+                <div class="grid-graficas">
+                    <div class="contenedor-grafica">
+                        <h4 class="titulo-grafica mb-15">Modalidades de Hurto</h4>
+                        <div class="caja-canvas">
                             <canvas id="chartModalidades"></canvas>
                         </div>
                     </div>
 
-                    <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 8px;">
-                        <h4 style="color: #f9b816; text-align: center; margin-bottom: 15px;">Ciudades con Mayor Incidencia (%)</h4>
-                        <div style="position: relative; height: 260px;">
+                    <div class="contenedor-grafica">
+                        <h4 class="titulo-grafica mb-15">Ciudades con Mayor Incidencia (%)</h4>
+                        <div class="caja-canvas">
                             <canvas id="chartCiudades"></canvas>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: CONTACTO Y MENSAJERÍA -->
+            <div id="seccion-contactar" class="seccion-contenido seccion-oculta">
+
+                <h2 class="titulo-seccion mb-10">Contáctanos</h2>
+                <p class="descripcion-seccion mb-20">¿Tienes preguntas, inconvenientes con tu dispositivo o deseas soporte técnico? Envíanos un mensaje.</p>
+
+                <div class="card card-contacto">
+                    <form class="form-contacto" action="https://formsubmit.co/jjrocha1304@gmail.com" method="POST">
+
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="http://localhost/lockbyces/dashboard.php">
+
+                        <div class="campo-grupo">
+                            <label class="crud-label label-contacto mb-5">Asunto</label>
+                            <input  name="asunto" type="text" id="contacto-asunto" class="crud-input" placeholder="Ej: Soporte de GPS, Pregunta General" required>
+                        </div>
+
+                        <div class="campo-grupo">
+                            <label class="crud-label label-contacto mb-5">Mensaje</label>
+                            <textarea name="mensaje" id="contacto-mensaje" class="crud-input textarea-contacto" rows="5" placeholder="Escribe aquí los detalles de tu consulta..." required></textarea>
+                        </div>
+                        
+                        <div class="flex-end">
+                            <button type="submit" class="btn-guardar btn-enviar-contacto">📩 Enviar Mensaje</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         <?php endif; ?>
 
         <!-- SECCIÓN: ADMINISTRACIÓN DE USUARIOS (Solo Admin) -->
         <?php if ($rolUsuario === 'admin'): ?>
-            <div id="seccion-admin-usuarios" class="seccion-contenido" style="display: none; width: 100%;">
-                <h2 style="margin-bottom: 20px; color: #f9b816;">Administración de Usuarios</h2>
+            <div id="seccion-admin-usuarios" class="seccion-contenido seccion-oculta ancho-completo">
+                <h2 class="titulo-seccion mb-20">Administración de Usuarios</h2>
                 
-                <div class="card" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+                <div class="card ancho-completo box-border">
                     <div class="header-admin">
                         <h3>Panel de Usuarios Registrados</h3>
                         <button class="btn-crear" onclick="crearUsuarioAdmin()">+ Nuevo Usuario</button>
                     </div>
 
-                    <div style="width: 100%; overflow-x: auto;">
+                    <div class="tabla-contenedor-scroll">
                         <table class="tabla-lockbyces">
                             <thead>
                                 <tr>
@@ -255,7 +270,7 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
                                     <th>Rol</th>
                                     <th>Teléfono</th>
                                     <th>Correo</th>
-                                    <th style="text-align: center;">Acciones</th>
+                                    <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-admin-usuarios">
@@ -269,5 +284,34 @@ $rolUsuario = isset($_SESSION['usuario_rol']) ? $_SESSION['usuario_rol'] : '';
 
     </div>
 
+    <!-- SCRIPT ADICIONAL PARA INTERACCIÓN DEL MENÚ MOBILE -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const btnToggle = document.getElementById('btn-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            function toggleMenu() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+
+            if (btnToggle) btnToggle.addEventListener('click', toggleMenu);
+            if (overlay) overlay.addEventListener('click', toggleMenu);
+        });
+
+        // Función wrapper para ocultar menú al seleccionar sección en celular
+        function seleccionarNavegacion(idSeccion, el) {
+            if (typeof mostrarSeccion === 'function') {
+                mostrarSeccion(idSeccion, el);
+            }
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }
+    </script>
 </body>
 </html>

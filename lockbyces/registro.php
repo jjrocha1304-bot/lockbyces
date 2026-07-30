@@ -6,6 +6,7 @@
     <title>Registro a Lockbyces</title>
 
     <link rel="stylesheet" href="./css/registro.css">
+    <link rel="stylesheet" href="./css/propiedades_personalizadas.css">
     <link rel="icon" type="image/png" href="img/favicon.jpeg" />
 
     <!-- Fuentes google fonts -->

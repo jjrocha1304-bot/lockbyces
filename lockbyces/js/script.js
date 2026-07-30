@@ -71,32 +71,37 @@ function cambiarVista() {
 // ==========================================
 // 4. CONTROL DE SECCIONES EN EL DASHBOARD
 // ==========================================
-function mostrarSeccion(idSeccion, enlaceClickeado) {
+function mostrarSeccion(idSeccion, elementoBoton) {
     const secciones = document.querySelectorAll('.seccion-contenido');
-    secciones.forEach(seccion => {
-        seccion.style.display = 'none';
-    });
-
-    const botones = document.querySelectorAll('.nav-btn');
-    botones.forEach(btn => {
-        btn.classList.remove('active');
+    secciones.forEach(sec => {
+        sec.style.display = 'none';
+        sec.classList.add('seccion-oculta');
     });
 
     const seccionObjetivo = document.getElementById('seccion-' + idSeccion);
     if (seccionObjetivo) {
         seccionObjetivo.style.display = 'block';
+        seccionObjetivo.classList.remove('seccion-oculta');
     }
 
-    if (enlaceClickeado) {
-        enlaceClickeado.classList.add('active');
+    const botones = document.querySelectorAll('.nav-btn');
+    botones.forEach(btn => btn.classList.remove('active'));
+
+    if (elementoBoton) {
+        elementoBoton.classList.add('active');
     }
 
+    // Lógica al cambiar de pestaña
     if (idSeccion === 'admin-usuarios') {
         cargarUsuariosAdmin();
     } else if (idSeccion === 'monitoreo') {
-        // Redimensionar el mapa de Cali cuando se muestra la pestaña para recalcular tamaño
+        // Inicializar mapa si no existe o recalcular dimensiones al mostrar sección
         setTimeout(() => {
-            if (mapaCali) mapaCali.invalidateSize();
+            if (!mapaCali) {
+                inicializarMapaCali();
+            } else {
+                mapaCali.invalidateSize();
+            }
         }, 200);
     } else if (idSeccion === 'estadisticas') {
         if (chartModalidadesInstancia) chartModalidadesInstancia.resize();
@@ -125,6 +130,11 @@ function inicializarMapaCali() {
     const mapaDiv = document.getElementById('mapa-cali');
     if (!mapaDiv) return;
 
+    if (mapaCali) {
+        mapaCali.invalidateSize();
+        return;
+    }
+
     // Coordenadas iniciales: Centro de Cali, Colombia
     const latInicial = 3.4516;
     const lngInicial = -76.5320;
@@ -132,13 +142,14 @@ function inicializarMapaCali() {
     // Crear el mapa de Leaflet
     mapaCali = L.map('mapa-cali').setView([latInicial, lngInicial], 14);
 
-    // Cargar mapa visual estilo oscuro
+    // Cargar mapa visual estilo oscuro (CartoDB Dark Matter)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap &copy; CARTO',
+        subdomains: 'abcd',
         maxZoom: 18
     }).addTo(mapaCali);
 
-    // Crear el marcador del punto amarillo flotante con pulso
+    // Marcador con punto amarillo
     const miIconoAmarillo = L.divIcon({
         className: 'marcador-gps-leaflet',
         iconSize: [18, 18],
@@ -198,26 +209,28 @@ function reportStolen() {
 }
 
 function updateLocation() {
-    if (!mapaCali || !marcadorCali) return;
+    if (!mapaCali || !marcadorCali) {
+        inicializarMapaCali();
+        return;
+    }
 
-    // Seleccionar una ubicación aleatoria dentro de Cali
+    // Seleccionar una ubicación dentro de Cali
     const puntoAleatorio = puntosCali[Math.floor(Math.random() * puntosCali.length)];
     
-    // Variación pequeña de coordenadas para hacer movimiento realista
+    // Variación pequeña de coordenadas para simular movimiento suave
     const nuevaLat = puntoAleatorio.lat + (Math.random() - 0.5) * 0.005;
     const nuevaLng = puntoAleatorio.lng + (Math.random() - 0.5) * 0.005;
 
     // Mover el punto amarillo y la cámara del mapa
+    mapaCali.flyTo([nuevaLat, nuevaLng], 15, { duration: 1.5 });
     marcadorCali.setLatLng([nuevaLat, nuevaLng]);
-    mapaCali.panTo([nuevaLat, nuevaLng]);
-
     marcadorCali.bindPopup(`<b>Bicicleta LOCKBYCES</b><br>Sector: ${puntoAleatorio.sector}`).openPopup();
 
     const coordsElem = document.getElementById('coords-display');
     const timeElem = document.getElementById('time-display');
 
     if (coordsElem) coordsElem.innerText = `${nuevaLat.toFixed(4)}° N, ${nuevaLng.toFixed(4)}° W (${puntoAleatorio.sector})`;
-    if (timeElem) timeElem.innerText = 'Justo ahora';
+    if (timeElem) timeElem.innerText = new Date().toLocaleTimeString();
 }
 
 // ==========================================
@@ -449,7 +462,44 @@ function eliminarUsuarioAdmin(id) {
 }
 
 // ==========================================
-// 7. INICIALIZACIÓN GENERAL Y GRÁFICAS (CHART.JS)
+// 7. FORMULARIO DE CONTACTO / ATENCIÓN
+// ==========================================
+function enviarMensajeContacto(event) {
+    event.preventDefault();
+
+    const formulario = event.currentTarget;
+    
+    // Captura de variables extraídas de la sesión activa ($_SESSION)
+    const telefono = formulario.dataset.telefono;
+    const nombre = formulario.dataset.nombre;
+    const correo = formulario.dataset.correo;
+
+    const asunto = document.getElementById('contacto-asunto').value.trim();
+    const mensaje = document.getElementById('contacto-mensaje').value.trim();
+
+    if (!asunto || !mensaje) {
+        alert('Por favor completa todos los campos.');
+        return;
+    }
+
+    const mensajePayload = {
+        remitente_telefono: telefono,
+        remitente_nombre: nombre,
+        remitente_correo: correo,
+        asunto: asunto,
+        mensaje: mensaje
+    };
+
+    console.log("Enviando reporte con los datos de sesión activa:", mensajePayload);
+
+    alert(`¡Mensaje enviado con éxito!\n\nProcesado desde el número: ${telefono}\nRemitente: ${nombre}\nAsunto: ${asunto}`);
+
+    document.getElementById('contacto-asunto').value = '';
+    document.getElementById('contacto-mensaje').value = '';
+}
+
+// ==========================================
+// 8. INICIALIZACIÓN GENERAL Y GRÁFICAS (CHART.JS)
 // ==========================================
 let chartModalidadesInstancia = null;
 let chartCiudadesInstancia = null;
@@ -457,13 +507,12 @@ let chartCiudadesInstancia = null;
 document.addEventListener("DOMContentLoaded", function() {
     cargarIntegrantes();
     iniciarCarrusel();
-    inicializarMapaCali();
-
+    
     if (document.getElementById('tabla-admin-usuarios')) {
         cargarUsuariosAdmin();
     }
 
-    // Inicialización de Gráficas Chart.js
+    // Inicializar gráficas si existen en el DOM
     const ctx1 = document.getElementById('chartModalidades');
     if (ctx1) {
         chartModalidadesInstancia = new Chart(ctx1, {

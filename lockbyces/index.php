@@ -21,6 +21,7 @@ $conexion->close();
     <title> LOCKBYCES </title>
 
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/propiedades_personalizadas.css">
 
     <script src="./js/script.js" defer></script>
 
@@ -46,14 +47,24 @@ $conexion->close();
         <img src="img/logo_lockbyces-transparente.png" alt="Logo" width="180" height="180">
         <h2>LOCKBYCES</h2>
     </header>
-    
-    <nav class="menu">
-        <a href="#abajo">Sobre nosotros</a>
-        <a href="#metas"> Metas</a>
-        <a href="#porque-lockbyces">Por que elegir a LOCKBYCES</a>
-        <a href="registro.php">Registrarme</a>
-        <a href="login.php">Iniciar sesión</a>
-    </nav>
+
+    <div class="menu">
+        <input type="checkbox" id="menu-toggle">
+        
+        <label for="menu-toggle" class="hamburguesa">
+            ☰
+        </label>
+
+        <nav>
+            <a href="#sobre-nosotros">Sobre nosotros</a>
+            <a href="#metas"> Metas</a>
+            <a href="#porque-lockbyces">Por que elegir a LOCKBYCES</a>
+            <a href="#registros">Usuarios registrados</a>
+            <a href="#contactenos">Contáctenos</a>
+            <a href="registro.php">Registrarme</a>
+            <a href="login.php">Iniciar sesión</a>
+        </nav>
+    </div>    
     
     <main>
         <section class="quienes-somos">
@@ -104,8 +115,8 @@ $conexion->close();
         </aside>
     </main>
 
-    <div class="abajo" id="abajo">
-        <div class="sobre-nosotros">
+    <div class="sobre-nosotros" id="sobre-nosotros">
+        <div class="descripcion-sobre-nosotros">
             <h2>Sobre Nosotros</h2>
             <p>            
                 En LOCKBYCES nos dedicamos a proteger tu bicicleta y devolverte la tranquilidad, 
@@ -116,12 +127,11 @@ $conexion->close();
                 Ante cualquier intento de forzamiento, nuestro dispositivo activa una sirena para ahuyentar al
                 agresor y te envía una alerta instantánea a tu celular. Combinamos tecnología y prevención 
                 para que te desplaces sin preocupaciones y mantengas tu vehículo siempre protegido.
-            </p>
+            </p>                 
         </div>
         <div class="imagen-sobre-nosotros">
             <img src="img/dispositivo.png" alt="dispositivo">
-        </div>
-        
+        </div>           
     </div>
 
     <div class="nuestras-metas">
@@ -179,11 +189,44 @@ $conexion->close();
         </div>
     </div>
 
-    <div class="registro">
-        <aside class="registros">
+    <div class="registros" id="registros">
             <h1>Número de usuarios registrados</h1>
             <span id="valor-contador"><?php echo $total_usuarios; ?></span>
-        </aside>
+    </div>
+
+    <div class="contactenos" id="contactenos">
+        <div class="contenedor-formulario">
+            <form class="formulario"
+                action="https://formsubmit.co/jjrocha1304@gmail.com" method="POST">
+
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="http://localhost/lockbyces/index.php">
+
+                <h2>Contactenos</h2>
+
+                <div class="grupo">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" required>
+                </div>
+
+                <div class="grupo">
+                    <label>Correo electrónico</label>
+                    <input type="email" name="correo" required>
+                </div>
+
+                <div class="grupo">
+                    <label>Asunto</label>
+                    <input type="text" name="asunto" required>
+                </div>
+
+                <div class="grupo">
+                    <label>Mensaje</label>
+                    <textarea name="mensaje" rows="6" required></textarea>
+                </div>
+
+                <button type="submit">Enviar mensaje</button>
+            </form>
+        </div>
     </div>
   
     <footer class="footer">
