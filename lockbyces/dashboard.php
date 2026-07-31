@@ -283,35 +283,5 @@ $correoUsuario   = $_SESSION['usuario_correo']   ?? '';
         <?php endif; ?>
 
     </div>
-
-    <!-- SCRIPT ADICIONAL PARA INTERACCIÓN DEL MENÚ MOBILE -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const btnToggle = document.getElementById('btn-menu-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-
-            function toggleMenu() {
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('active');
-            }
-
-            if (btnToggle) btnToggle.addEventListener('click', toggleMenu);
-            if (overlay) overlay.addEventListener('click', toggleMenu);
-        });
-
-        // Función wrapper para ocultar menú al seleccionar sección en celular
-        function seleccionarNavegacion(idSeccion, el) {
-            if (typeof mostrarSeccion === 'function') {
-                mostrarSeccion(idSeccion, el);
-            }
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
-            if (sidebar && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-        }
-    </script>
 </body>
 </html>

@@ -115,9 +115,9 @@ $conexion->close();
         </aside>
     </main>
 
-    <div class="sobre-nosotros" id="sobre-nosotros">
+    <div class="sobre-nosotros" id="sobre-nosotros">     
         <div class="descripcion-sobre-nosotros">
-            <h2>Sobre Nosotros</h2>
+            <h2>Sobre Nosotros</h2>        
             <p>            
                 En LOCKBYCES nos dedicamos a proteger tu bicicleta y devolverte la tranquilidad, 
                 especialmente en entornos urbanos con alta incidencia de robos. Somos los creadores de un 
@@ -135,20 +135,20 @@ $conexion->close();
     </div>
 
     <div class="nuestras-metas">
-    <div class="imagen-metas">
-        <img src="img/imagen_metas.jpg" alt="dispositivo" width= "606px" height= "400px">
-    </div>
-    <div class="metas" id="metas">
-        <h2>Nuestra Meta</h2>
-        <p>
-            Nuestra meta principal es garantizar a cada ciclista la máxima satisfacción, seguridad y 
-            absoluta tranquilidad en su vida cotidiana a través de un avanzado e integral sistema 
-            antirrobo de vanguardia para sus bicicletas. Nos dedicamos a diseñar tecnología inteligente 
-            capaz de monitorear y detectar con alta precisión cualquier intento de robo, manipulación no 
-            autorizada o forcejeo, enviando notificaciones e incidencias de alerta al propietario en 
-            tiempo real para brindarle una respuesta inmediata y proteger su patrimonio en todo momento.         
-        </p>
-    </div>
+        <div class="imagen-metas">
+            <img src="img/imagen_metas.jpg" alt="dispositivo" width= "606px" height= "400px">
+        </div>
+        <div class="metas" id="metas">
+            <h2>Nuestra Meta</h2>
+            <p>
+                Nuestra meta principal es garantizar a cada ciclista la máxima satisfacción, seguridad y 
+                absoluta tranquilidad en su vida cotidiana a través de un avanzado e integral sistema 
+                antirrobo de vanguardia para sus bicicletas. Nos dedicamos a diseñar tecnología inteligente 
+                capaz de monitorear y detectar con alta precisión cualquier intento de robo, manipulación no 
+                autorizada o forcejeo, enviando notificaciones e incidencias de alerta al propietario en 
+                tiempo real para brindarle una respuesta inmediata y proteger su patrimonio en todo momento.         
+            </p>
+        </div>
     </div>
 
     <div class="porque-lockbyces" id="porque-lockbyces">
@@ -163,8 +163,7 @@ $conexion->close();
                     LOCKBYCES no solo es un sistema de seguridad , sino una herramienta que brinda, confianza,
                     seguridad Y  tranquilidad a los que usan bicicletas como medio de trasporte.
                 </p>
-        </div>
-            
+        </div>            
         <div class="tarjetas-porque-lockbyces">
             <div class="tarjeta-porque">
                 <h3>Seguridad anti-robo</h3>
@@ -231,7 +230,13 @@ $conexion->close();
   
     <footer class="footer">
         <p>
-            2026 - Comfandi El Prado Bachiller.
+            Comfandi El Prado Bachiller
+        </p>
+         <p>
+            LockByces - Derechos Reservados 2026
+        </p>
+        <p>
+            Cali - Colombia
         </p>
     </footer>    
 </body>

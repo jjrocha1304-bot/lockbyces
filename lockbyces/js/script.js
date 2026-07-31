@@ -420,6 +420,9 @@ function editarUsuarioAdmin(id) {
 }
 
 function guardarEdicionUsuario(id) {
+    // 1. Buscamos el usuario en la caché local para obtener su género y edad actuales
+    const usuarioOriginal = usuariosCacheBD.find(u => u.id == id);
+
     const nombre = document.getElementById('modal-edit-nombre').value.trim();
     const rol = document.getElementById('modal-edit-rol').value;
     const telefono = document.getElementById('modal-edit-telefono').value.trim();
@@ -430,6 +433,11 @@ function guardarEdicionUsuario(id) {
     formData.append('accion', 'editar');
     formData.append('id', id);
     formData.append('nombre', nombre);
+    
+    // 2. Adjuntamos el género y la edad que ya tenía guardados
+    formData.append('genero', usuarioOriginal ? (usuarioOriginal.genero || '') : '');
+    formData.append('edad', usuarioOriginal ? (usuarioOriginal.edad || '') : '');
+    
     formData.append('rol', rol);
     formData.append('telefono', telefono);
     formData.append('correo', correo);
@@ -558,3 +566,30 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+            const btnToggle = document.getElementById('btn-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            function toggleMenu() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            }
+
+            if (btnToggle) btnToggle.addEventListener('click', toggleMenu);
+            if (overlay) overlay.addEventListener('click', toggleMenu);
+        });
+
+        // Función wrapper para ocultar menú al seleccionar sección en celular
+        function seleccionarNavegacion(idSeccion, el) {
+            if (typeof mostrarSeccion === 'function') {
+                mostrarSeccion(idSeccion, el);
+            }
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }

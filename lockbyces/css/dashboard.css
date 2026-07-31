@@ -195,8 +195,8 @@ body {
 
 /* BOTONES CRUD */
 .btn-crear {
-    background-color: #27ae60;
-    color: white;
+    background-color: #f9b816;
+    color: rgb(0, 0, 0);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -212,10 +212,10 @@ body {
     margin-right: 5px;
 }
 
-.btn-editar { background-color: #f39c12; color: white; }
+.btn-editar { background-color: #f39c12; color: rgb(0, 0, 0); }
 .btn-eliminar { background-color: #c0392b; color: white; }
-.btn-cancelar { background-color: #7f8c8d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
-.btn-guardar { background-color: #2980b9; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+.btn-cancelar { background-color: #000; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+.btn-guardar { background-color: #f9b816; color: rgb(0, 0, 0); border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
 
 /* MODALES FLOANTES (POP-UPS) */
 .crud-modal-overlay {
